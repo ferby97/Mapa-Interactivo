@@ -1,0 +1,121 @@
+PImage mapImage;
+
+//Crea una tabla que guarda los datos del archivo .tsv
+Table dataTable;
+
+//numero de filas en el archivo
+int rowCount;
+
+// ubicacion de los circulos
+float x = 0;
+float y = 0;
+
+//diametro de la elipse
+float diametro = 0.5;
+//segundo
+
+//guarda el valor de la columna 3
+float columna3 = 0;
+//valor maximo y minimo de la columna 3 del archivo
+float dataMinColumna3 = 0;
+float dataMaxColumna3 = 0;
+
+
+//guarda el nombre de la fila
+String nombreEstado = "Promedio";
+
+float aproxColor = 2;
+//da el color a cada circulo
+color colorIntermedio;
+float transparencia = 50; 
+
+
+String nombreLocalidad;
+
+
+void setup() 
+{
+  size(1920, 1080);  
+  
+  mapImage = loadImage("mapa1.png");
+  
+  dataTable = loadTable("locations.tsv");
+ 
+  // da el numero de filas del archivo
+  rowCount = dataTable.getRowCount();
+  println(rowCount);
+  
+  //recorre el archivo 
+  for (int i = 0; i < rowCount; i++) 
+  {
+    
+    //segundo
+    
+    columna3 = dataTable.getFloat(i, 3); // column 3
+    //determina el valor max y minimo de la columna 3
+    if (columna3 > dataMaxColumna3) 
+    {
+      dataMaxColumna3 = columna3;
+    }
+    if (columna3 < dataMinColumna3) 
+    {
+      dataMinColumna3 = columna3;
+    }
+  }
+}
+    
+    void draw() 
+{  
+  background(255);
+  image(mapImage, 0, 0);
+
+  //suaviza el borde del circulo  
+  smooth();
+  
+  // Loop through the rows of the locations file and draw the points  
+  for (int i = 0; i < rowCount; i++) 
+  {
+    x = dataTable.getFloat(i, 1);  // column 1
+    y = dataTable.getFloat(i, 2);  // column 2
+    
+    //segundo
+    
+    columna3 = dataTable.getFloat(i, 3);  // column 3
+  diametro = map(columna3, dataMinColumna3, dataMaxColumna3, 30, 40);
+  //diametro = columna3;
+   colorIntermedio = lerpColor(#FFFFFF,#0D88FF,aproxColor);
+    fill(colorIntermedio);
+    
+  
+    //tercero
+   noStroke();
+   fill(colorIntermedio);
+    
+    ellipse(x, y, diametro, diametro);
+    
+     
+    
+if (dist(x, y, mouseX, mouseY) < diametro) 
+    {
+      fill(0);
+      textAlign(CENTER);
+      // Show the data value and the state abbreviation in parentheses
+      text(nombreEstado + ":" + columna3, x-10, y);
+    }
+    
+     nombreLocalidad =dataTable.getString(i,0);
+     if (dist(x, y, mouseX, mouseY) < diametro-15) 
+    {
+      fill(255,0,0);
+      textAlign(CENTER);
+      textSize(15);
+      // Show the data value and the state abbreviation in parentheses
+      text(nombreLocalidad + "", x, y-15);
+      textSize(15);
+    }
+    
+  }
+  
+    
+}
+  
