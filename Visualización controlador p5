@@ -1,0 +1,684 @@
+//libreria del slider
+import controlP5.*;
+
+ControlP5 cp5;
+ControlP5 cp51;
+
+//el valor en donde se encuentra el slider
+//int valSlider;
+//el valor en donde se encuentra el slider
+int valorSlider;
+int valorSlider1;
+
+//numero de filas en el archivo
+int rowCount;
+int rowCount1;
+
+//variable que guarda toda la información de la columna del tiempo
+String [] tiempo; 
+String [] tiempo1; 
+
+PShape cerebro;
+PShape rocket;
+PImage fondo;
+
+//se crea la tabla que guarda la ifnormación del .csv
+Table table;
+Table table1;
+
+//arreglo que guarda todos los datos de la columna 2gSuscripcion
+int [] movil2G;
+int [] movil2G1;
+
+//variable que guarda el numero de suscriptores 2G, respecto a la fecha elegida con el slider
+int dato2G;
+int dato2G1;
+
+
+//2G
+//cantidad de cubos pequeños
+int cubies2G;
+int cubies2G1;
+
+//posición de los cubos pequeños
+float[]x2G;
+float[]y2G;
+float[]z2G;
+
+float[]x2G1;
+float[]y2G1;
+float[]z2G1;
+
+//velocidad de movimiento de los cubos pequeños
+float[]xSpeed2G;
+float[]ySpeed2G;
+float[]zSpeed2G;
+
+float[]xSpeed2G1;
+float[]ySpeed2G1;
+float[]zSpeed2G1;
+
+//rotación de los cubos pequeños
+float[]xRot2G;
+float[]yRot2G;
+float[]zRot2G;
+
+float[]xRot2G1;
+float[]yRot2G1;
+float[]zRot2G1;
+
+//dimensiones del cubo blanco 
+float sizeCube = 100;
+float sizeCube1 = 100;
+
+//variable para que salgan del centro los cubos pequeños, cada que se mueve el slider
+boolean unaVez2G = false;
+boolean unaVez2G1 = false;
+
+float ry;
+
+void setup() 
+{
+  size(1980,1080, P3D);
+  
+   cerebro = loadShape("cere.obj");
+    rocket = loadShape("rocket.obj");
+  
+  table = loadTable("datosInternetCompleto1.csv", "header");
+  
+   table1 = loadTable("datosInternetCompleto11.csv", "header");
+
+  fondo = loadImage("fondo.png");
+  rowCount = table.getRowCount();
+  println(rowCount + " filas en la tabla");
+  
+  rowCount1 = table1.getRowCount();
+  println(rowCount1 + " filas en la tabla");
+      
+
+  
+  tiempo = new String [rowCount];
+  
+  movil2G = new int [rowCount];
+  
+  tiempo1 = new String [rowCount];
+  
+  movil2G1 = new int [rowCount];
+  
+  for(int i = 0; i < rowCount; i++)
+  {
+    //creamos un objeto que guarda la información de las filas de la tabla
+    TableRow row = table.getRow(i);
+    
+    tiempo[i] = row.getString("tiempo1");
+    
+    movil2G[i]= row.getInt("2gSuscripcion1");
+  }
+  
+   for(int i = 0; i < rowCount1; i++)
+  {
+    //creamos un objeto que guarda la información de las filas de la tabla
+    TableRow row = table1.getRow(i);
+    
+    tiempo1[i] = row.getString("tiempo");
+    
+    movil2G1[i]= row.getInt("2gSuscripcion");
+  }
+    
+ 
+  cp5 = new ControlP5(this);  
+  cp51 = new ControlP5(this);  
+
+  gui();
+    gui1();
+  
+  
+}
+
+void gui()
+{ 
+     cp5.addSlider("valSlider")
+     .setPosition(100,900)
+     .setWidth(600)
+     .setRange(0,13)
+     .setValue(5)
+     .setNumberOfTickMarks(14)
+     .setSliderMode(Slider.FLEXIBLE)
+     ;       
+}
+void gui1()
+{ 
+     cp51.addSlider("valSlider1")
+     .setPosition(1000,900)
+     .setWidth(600)
+     .setRange(0,13)
+     .setValue(5)
+     .setNumberOfTickMarks(14)
+     .setSliderMode(Slider.FLEXIBLE)
+     ;       
+}
+
+
+//función que se ejecuta cuando el slider se mueve 
+void valSlider(int valor ) 
+{ 
+  //el valor en donde se encuentra el slider
+  valorSlider = valor;
+  println(valorSlider + "    " + dato2G);
+   
+   
+    
+  //variable para que salgan del centro los cubos pequeños, cada que se mueve el slider
+  unaVez2G=false;
+}
+
+void valSlider1(int valor1 ) 
+{ 
+  //el valor en donde se encuentra el slider
+  valorSlider1 = valor1;
+  println(valorSlider1 + "    " + dato2G1);
+   
+   
+    
+  //variable para que salgan del centro los cubos pequeños, cada que se mueve el slider
+  unaVez2G1=false;
+  
+}
+
+
+void draw()
+{
+  image(fondo,0,0);
+  lights();
+  
+  
+ 
+  //------------------------------------------------------------------------
+
+ 
+  //-------------------------------------------------------------------------
+  fill(255);
+  //colocar el texto del slider verticalmente
+  for(int i = 0; i < rowCount; i++)
+  { 
+    float x = map(i, 0, rowCount-1, 100, 700);
+    //text(tiempo[i], x, 35);
+    
+    pushMatrix();
+    translate(x,923);
+    rotate(PI/2);
+    //se coloca el texto en cada linea
+    text(tiempo[i], 0, 0);
+    popMatrix();   
+    
+      
+  }
+  
+  
+      
+  pushMatrix(); 
+    //dibuja los cubos
+   
+   drawCubes2G();  
+   
+  popMatrix();
+   
+  //----------------------------------------
+  fill(255);
+  //colocar el texto del slider verticalmente
+  for(int i = 0; i < rowCount1; i++)
+  { 
+    float x1 = map(i, 0, rowCount1-1, 1000, 1600);
+    //text(tiempo[i], x, 35);
+    
+    pushMatrix();
+    translate(x1,923);
+    rotate(PI/2);
+    //se coloca el texto en cada linea
+    text(tiempo1[i], 0, 0);
+    popMatrix();      
+  }
+  
+  
+      
+  pushMatrix(); 
+    //dibuja los cubos
+   
+  
+      
+      text("Colegios publicos: ", 300, 100);
+      
+       text("Es de 0 a 100%: ", 300, 120);
+      
+      
+      text("Colegios privados: ", 1100, 100);
+      
+       text("Es de 0 a 100%: ", 1100, 120);
+      
+       ;
+    
+   
+     drawCubes2G1();  
+  
+   
+     drawCubes2G1();  
+    //drawCubes2GCere();
+  popMatrix();
+  
+   
+  
+}
+
+
+void drawCubes2G()
+{ 
+  
+  //variable que guarda el numero de suscriptores 2G, respecto a la fecha elegida con el slider
+  dato2G= movil2G[valorSlider];
+  
+ if (valorSlider==0){
+  text("Resultado del periodo 2016-1p: " + dato2G, 300, 200);
+ }
+  if (valorSlider==1){
+  text("Resultado del periodo 2016-2p: " + dato2G, 300, 200);
+ }
+  if (valorSlider==2){
+  text("Resultado del periodo 2017-1p: " + dato2G, 300, 200);
+ }
+  if (valorSlider==3){
+  text("Resultado del periodo 2017-2p: " + dato2G, 300, 200);
+ }
+  if (valorSlider==4){
+  text("Resultado del periodo 2018-1p: " + dato2G, 300, 200);
+ }
+  if (valorSlider==5){
+  text("Resultado del periodo 2018-2p: " + dato2G, 300, 200);
+ }
+  if (valorSlider==6){
+  text("Resultado del periodo 2019-1p: " + dato2G, 300, 200);
+ }
+  if (valorSlider==7){
+  text("Resultado del periodo 2019-2p: " + dato2G, 300, 200);
+ }
+  if (valorSlider==8){
+  text("Resultado del periodo 2020-1p: " + dato2G, 300, 200);
+ }
+  if (valorSlider==9){
+  text("Resultado del periodo 2020-2p: " + dato2G, 300, 200);
+ }
+  if (valorSlider==10){
+  text("Resultado del periodo promedio1: " + dato2G, 300, 200);
+ }
+  if (valorSlider==11){
+  text("Resultado del periodo promedio2: " + dato2G, 300, 200);
+ }
+  if (valorSlider==12){
+  text("Resultado del periodo promedio3: " + dato2G, 300, 200);
+ }
+  if (valorSlider==13){
+  text("Resultado del periodo promedio 4: " + dato2G, 300, 200);
+ }
+  
+  //ubica el cubo blanco en el centro    
+  translate(500, 550, 130);
+  //genera la rotación del cubo blanco
+  rotateX(frameCount * 0.001);
+  rotateY(frameCount * 0.002);
+  rotateZ(frameCount * 0.001);
+   
+   
+  noFill(); 
+  stroke(0);
+ 
+  //dimensiones del cubo blanco (200)
+  sphere(sizeCube);
+  
+  
+  if(unaVez2G==false)
+  {
+    //determina el número de cubos pequeños
+    cubies2G = dato2G;
+    
+    //se inicialian el arreglo de la posición de los cubos pequeños
+    x2G = new float[cubies2G];
+    y2G = new float[cubies2G];
+    z2G = new float[cubies2G];
+    
+    //se inicialian el arreglo de la velocidad de los cubos pequeños
+    xSpeed2G = new float[cubies2G];
+    ySpeed2G = new float[cubies2G];
+    zSpeed2G = new float[cubies2G];
+    
+    //se inicialian el arreglo de la rotación de los cubos pequeños
+    xRot2G = new float[cubies2G];
+    yRot2G = new float[cubies2G];
+    zRot2G = new float[cubies2G];
+  
+    //se llenan los arreglos
+    for (int i = 0; i < cubies2G; i++)
+    {
+      //los cubos empiezan desde el punto (0,0,0) es decir desde el centro
+      x2G[i] = 0;
+      y2G[i] = 0; 
+      z2G[i] = 0;
+      
+      //a cada cubo pequeño se le asigna una velocidad aleatoria 
+      xSpeed2G[i] = random(-1, 1);
+      ySpeed2G[i] = random(-1, 1); 
+      zSpeed2G[i] = random(-1, 1); 
+  
+      //a cada cubo pequeño se le asigna una rotación
+      xRot2G[i] = random(40, 100);
+      yRot2G[i] = random(40, 100);
+      zRot2G[i] = random(40, 100);
+    }
+ 
+     //despues de inicializar y llenar los arreglos, se sale del condicional para que lo vuelva a crear mácubos pequeños, hasta que se vuelva a mover el slider
+     unaVez2G=true;
+  }
+  
+  
+  for (int i = 0; i < cubies2G; i++)
+  {
+    pushMatrix();
+      //ubica los cubos pequeños en el centro
+      translate(x2G[i], y2G[i], z2G[i]);
+      
+      //genera la rotación a cada cubo pequeño
+      rotateX(frameCount*PI/xRot2G[i]);
+      rotateY(frameCount*PI/yRot2G[i]);
+      rotateX(frameCount*PI/zRot2G[i]);
+      
+      //dibuja los cubos de color rojo y de tamaño de 10
+      if (valorSlider==0){
+       fill(#D81616);
+}
+ if (valorSlider==1){
+   
+  
+   fill(#D81616);
+       
+}
+ if (valorSlider==2){
+      fill(#16D872);
+}
+ if (valorSlider==3){
+      fill(#1C54E8);
+}
+ if (valorSlider==4){
+      fill(#1C54E8);
+}
+ if (valorSlider==5){
+      fill(#D81616);
+}
+ if (valorSlider==6){
+      fill(#D81616);
+}
+ if (valorSlider==7){
+      fill(#16D872);
+}
+ if (valorSlider==8){
+      fill(#1C54E8);
+}
+ if (valorSlider==9){
+      fill(#1C54E8);
+}
+ if (valorSlider==10){
+      fill(#D81616);
+}
+ if (valorSlider==11){
+      fill(#D81616);
+}
+ if (valorSlider==12){
+      fill(#D81616);
+}
+ if (valorSlider==13){
+      fill(#D81616);
+}
+   
+      
+     // fill(#1C54E8);
+      noStroke();
+      sphere(10);
+        
+      //genera el movimiento de loscubos con su respectiva velocidad  
+      x2G[i] += xSpeed2G[i];
+      y2G[i] += ySpeed2G[i];
+      z2G[i] += zSpeed2G[i];
+    popMatrix();
+
+    
+    //si la posción del cubo pequeño en X es mayor o menor al tamaño del cubo grande
+    if (x2G[i] > sizeCube/2 || x2G[i] < -sizeCube/2)
+    {
+      //entonces cambie de dirección
+      xSpeed2G[i]*=-1;
+    }
+    
+    //si la posción del cubo pequeño en Y es mayor o menor al tamaño del cubo grande
+    if (y2G[i] > sizeCube/2 || y2G[i] < -sizeCube/2)
+    {
+      //entonces cambie de dirección
+      ySpeed2G[i]*=-1;
+    }
+    
+    //si la posción del cubo pequeño en Z es mayor o menor al tamaño del cubo grande
+    if (z2G[i] > sizeCube/2 || z2G[i] < -sizeCube/2)
+    {
+      //entonces cambie de dirección
+      zSpeed2G[i]*=-1;
+    }
+    
+  }
+  
+    
+}
+
+//-------------------------------------------------------------
+void drawCubes2G1()
+{ 
+  
+  //variable que guarda el numero de suscriptores 2G, respecto a la fecha elegida con el slider
+  dato2G1= movil2G1[valorSlider1];
+  
+ if (valorSlider1==0){
+  text("Resultado del periodo 2016-1p: " + dato2G1, 1100, 200);
+ }
+  if (valorSlider1==1){
+  text("Resultado del periodo 2016-2p: " + dato2G1, 1100, 200);
+ }
+  if (valorSlider1==2){
+  text("Resultado del periodo 2017-1p: " + dato2G1, 1100, 200);
+ }
+  if (valorSlider1==3){
+  text("Resultado del periodo 2017-2p: " + dato2G1, 1100, 200);
+ }
+  if (valorSlider1==4){
+  text("Resultado del periodo 2018-1p: " + dato2G1, 1100, 200);
+ }
+  if (valorSlider1==5){
+  text("Resultado del periodo 2018-2p: " + dato2G1, 1100, 200);
+ }
+  if (valorSlider1==6){
+  text("Resultado del periodo 2019-1p: " + dato2G1, 1100, 200);
+ }
+  if (valorSlider1==7){
+  text("Resultado del periodo 2019-2p: " + dato2G1, 1100, 200);
+ }
+  if (valorSlider1==8){
+  text("Resultado del periodo 2020-1p: " + dato2G1, 1100, 200);
+ }
+  if (valorSlider1==9){
+  text("Resultado del periodo 2020-2p: " + dato2G1, 1100, 200);
+ }
+  if (valorSlider1==10){
+  text("Resultado del periodo promedio 1: " + dato2G1, 1100, 200);
+ }
+  if (valorSlider1==11){
+  text("Resultado del periodo promedio 2: " + dato2G1, 1100, 200);
+ }
+  if (valorSlider1==12){
+  text("Resultado del periodo promedio 3:" + dato2G1, 1100, 200);
+ }
+  if (valorSlider1==13){
+  text("Resultado del periodo promedio 4: " + dato2G1, 1100, 200);
+ }
+  
+  //ubica el cubo blanco en el centro    
+  translate(1300, 550, 130);
+  //genera la rotación del cubo blanco
+  rotateX(frameCount * 0.001);
+  rotateY(frameCount * 0.002);
+  rotateZ(frameCount * 0.001);
+   
+   
+  noFill(); 
+  stroke(0);
+ 
+  //dimensiones del cubo blanco (200)
+  sphere(sizeCube1);
+  
+  
+  if(unaVez2G1==false)
+  {
+    //determina el número de cubos pequeños
+    cubies2G1 = dato2G1;
+    
+    //se inicialian el arreglo de la posición de los cubos pequeños
+    x2G1 = new float[cubies2G1];
+    y2G1 = new float[cubies2G1];
+    z2G1 = new float[cubies2G1];
+    
+    //se inicialian el arreglo de la velocidad de los cubos pequeños
+    xSpeed2G1 = new float[cubies2G1];
+    ySpeed2G1 = new float[cubies2G1];
+    zSpeed2G1 = new float[cubies2G1];
+    
+    //se inicialian el arreglo de la rotación de los cubos pequeños
+    xRot2G1 = new float[cubies2G1];
+    yRot2G1 = new float[cubies2G1];
+    zRot2G1 = new float[cubies2G1];
+  
+    //se llenan los arreglos
+    for (int i = 0; i < cubies2G1; i++)
+    {
+      //los cubos empiezan desde el punto (0,0,0) es decir desde el centro
+      x2G1[i] = 0;
+      y2G1[i] = 0; 
+      z2G1[i] = 0;
+      
+      //a cada cubo pequeño se le asigna una velocidad aleatoria 
+      xSpeed2G1[i] = random(-1, 1);
+      ySpeed2G1[i] = random(-1, 1); 
+      zSpeed2G1[i] = random(-1, 1); 
+  
+      //a cada cubo pequeño se le asigna una rotación
+      xRot2G1[i] = random(40, 100);
+      yRot2G1[i] = random(40, 100);
+      zRot2G1[i] = random(40, 100);
+    }
+ 
+     //despues de inicializar y llenar los arreglos, se sale del condicional para que lo vuelva a crear mácubos pequeños, hasta que se vuelva a mover el slider
+     unaVez2G1=true;
+  }
+  
+  
+  for (int i = 0; i < cubies2G1; i++)
+  {
+    pushMatrix();
+      //ubica los cubos pequeños en el centro
+      translate(x2G1[i], y2G1[i], z2G1[i]);
+      
+      //genera la rotación a cada cubo pequeño
+      rotateX(frameCount*PI/xRot2G1[i]);
+      rotateY(frameCount*PI/yRot2G1[i]);
+      rotateX(frameCount*PI/zRot2G1[i]);
+      
+      //dibuja los cubos de color rojo y de tamaño de 10
+      if (valorSlider1==0){
+   
+      fill(#1C54E8);
+}
+ if (valorSlider1==1){
+   
+
+    //textAlign(CENTER);
+   
+   fill(#D81616);
+       
+}
+ if (valorSlider1==2){
+      fill(#16D872);
+}
+ if (valorSlider1==3){
+      fill(#1C54E8);
+}
+ if (valorSlider1==4){
+      fill(#1C54E8);
+}
+ if (valorSlider1==5){
+      fill(#D81616);
+}
+ if (valorSlider1==6){
+      fill(#D81616);
+}
+ if (valorSlider1==7){
+      fill(#16D872);
+}
+ if (valorSlider1==8){
+      fill(#1C54E8);
+}
+ if (valorSlider1==9){
+      fill(#1C54E8);
+}
+ if (valorSlider1==10){
+      fill(#D81616);
+}
+ if (valorSlider1==11){
+      fill(#D81616);
+}
+ if (valorSlider1==12){
+      fill(#D81616);
+}
+ if (valorSlider1==13){
+      fill(#D81616);
+}
+   
+      
+     // fill(#1C54E8);
+      noStroke();
+      sphere(10);
+        
+      //genera el movimiento de loscubos con su respectiva velocidad  
+      x2G1[i] += xSpeed2G1[i];
+      y2G1[i] += ySpeed2G1[i];
+      z2G1[i] += zSpeed2G1[i];
+    popMatrix();
+
+    
+    //si la posción del cubo pequeño en X es mayor o menor al tamaño del cubo grande
+    if (x2G1[i] > sizeCube1/2 || x2G1[i] < -sizeCube1/2)
+    {
+      //entonces cambie de dirección
+      xSpeed2G1[i]*=-1;
+    }
+    
+    //si la posción del cubo pequeño en Y es mayor o menor al tamaño del cubo grande
+    if (y2G1[i] > sizeCube1/2 || y2G1[i] < -sizeCube1/2)
+    {
+      //entonces cambie de dirección
+      ySpeed2G1[i]*=-1;
+    }
+    
+    //si la posción del cubo pequeño en Z es mayor o menor al tamaño del cubo grande
+    if (z2G1[i] > sizeCube1/2 || z2G1[i] < -sizeCube1/2)
+    {
+      //entonces cambie de dirección
+      zSpeed2G1[i]*=-1;
+    }
+    
+  }
+  
+    
+}
+ 
