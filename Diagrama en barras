@@ -1,0 +1,156 @@
+Table tabla;
+
+int datoMax;
+
+int numeroFilas;
+
+String [] edad; 
+
+//arreglos de cada columna
+int [] kennedy;
+int datoKennedy = 0;
+
+int [] cBolivar;
+int datocBolivar = 0;
+
+int [] suba;
+int datoSuba = 0;
+
+void setup() 
+{
+  size(980, 600);
+  tabla = loadTable("Datos-Icfes.csv", "header");
+
+  numeroFilas = tabla.getRowCount();
+  println(numeroFilas + " filas en la tabla");
+
+
+  //cantidad de filas
+  kennedy = new int [numeroFilas];
+  cBolivar = new int [numeroFilas];
+  suba = new int [numeroFilas];
+
+
+  edad = new String [numeroFilas]; 
+  for (int i = 0; i < numeroFilas; i++)
+  {
+    TableRow row = tabla.getRow(i);
+    edad[i]= row.getString("año");
+
+    //guardar cada información de las filas en el arreglo correspondiente
+    kennedy[i]= row.getInt("publico");
+    cBolivar[i]= row.getInt("privado");
+    suba[i]= row.getInt("validadero");
+
+    //determina el valor max de todas las columnas
+    datoKennedy  = kennedy[i];
+    if (datoKennedy > datoMax) 
+    {
+      datoMax = datoKennedy;
+    }
+
+    datocBolivar  = cBolivar[i];
+    if (datocBolivar > datoMax) 
+    {
+      datoMax = datocBolivar;
+    }
+
+    datoSuba  = suba[i];
+    if (datoSuba > datoMax) 
+    {
+      datoMax = datoSuba;
+    }
+  }
+}
+
+void draw() 
+{
+  background(255);
+  dibujarGrafica();
+
+  fill(0);
+  text("promedio por años en las pruebas ifces  - 2016-1p hasta el 2019-2p - de 0 hasta 5 siendo este ultimo el maximo resultado", 100, 20);
+
+  text("Publico", 100, 50);
+  text("privado", 230, 50);
+  text("validadero", 370, 50);
+
+  fill(#2F40EA);
+  rect(160, 35, 20, 20);
+  fill(#2FE6EA);
+  rect(320, 35, 20, 20);
+  fill(#119069);
+  rect(440, 35, 20, 20);
+}
+
+void dibujarGrafica()
+{
+  noStroke();
+  fill(#053929);
+  rect(40, 75, 800, 460);
+
+  fill(255);
+  rect(140, 125, 700, 350);
+
+  //lineas guia
+  strokeWeight(1);
+  stroke(#f5f5f5);
+
+  //vertical
+  for (int i = 0; i < numeroFilas; i++)
+  {
+    float x = map(i, 0, numeroFilas-1, 140, 800); 
+    line(x, 125, x, 475);
+
+    //color del texto - edades
+    fill(255);
+
+    //texto edades
+    pushMatrix(); 
+    translate(x, 480); 
+    rotate(PI/2); 
+    text(edad[i], 0, 0);
+    popMatrix();
+  }
+
+  //horizontal
+  for (int i = 0; i < datoMax; i+=1) 
+  {
+    float y = map(i, 0, datoMax, 475, 80);
+    line(140, y, 840, y);
+
+    //texto con el valor de cada linea
+    fill(255);
+    text(i, 120, y);
+  }
+  //kennedy
+  noStroke();
+  fill(#2F40EA);
+  for (int i = 0; i < numeroFilas; i++)
+  {
+    float x = map(i, 0, numeroFilas-1, 140, 800);
+    float y = map(kennedy[i], 0, datoMax, 400, 140);
+    //ellipse(x, y,10,10); 
+    rect(x, y, 10, 475-y);
+  }
+  //ciudad bolivar
+  noStroke();
+  fill(#2FE6EA);
+  for (int i = 0; i < numeroFilas; i++)
+  {
+    float x = map(i, 0, numeroFilas-1, 140, 800);
+    float y = map(cBolivar[i], 0, datoMax, 470, 130);
+    //ellipse(x, y,10,10); 
+    rect(x+10, y, 10, 475-y);
+  }
+  //suba
+  noStroke();
+  fill(#119069);
+  for (int i = 0; i < numeroFilas; i++)
+  {
+    float x = map(i, 0, numeroFilas-1, 140, 800);
+    float y = map(suba[i], 0, datoMax, 470, 130);
+    //ellipse(x, y,10,10); 
+    rect(x+20, y, 10, 475-y);
+  }
+}
