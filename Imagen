@@ -1,0 +1,75 @@
+var arr,t,x,y
+const xx=130/2,yy=60/2
+function setup() {
+	createCanvas(1112, 834);
+	background(0);
+	arr=new Array(xx)
+	for(i=0;i<xx;i++){
+		arr[i]=new Array(yy)
+		for(j=0;j<yy;j++){
+			arr[i][j]=new prt
+			arr[i][j].gc(width/xx*i,height/yy*j)
+		}
+	}
+	t=0
+	x=0
+	y=0
+	noStroke()
+}
+
+function draw() {
+	background(0)
+	t++
+	for(i=0;i<xx;i++){
+		for(j=0;j<yy;j++){
+			arr[i][j].w()
+			arr[i][j].af(mouseX,mouseY,1,0.1)
+			// ADD YOUR WAVES HERE like this: arr[i][j].af(source x, source y, amplitude, frequency
+			//arr[i][j].af(mouseX,mouseY,1,0.1)
+		}
+	}
+}
+
+class prt{
+	constructor(){
+		this.x=0
+		this.y=0
+		this.vx=0
+		this.vy=0
+	}
+	gc(x,y){
+		this.x=x
+		this.y=y
+	}
+	af(x,y,A,F){
+		this.vx+=(5000-dist(x,y,this.x,this.y))/100*cos(tg(x,y,this.x,this.y))*(1+cos(dist(x,y,this.x,this.y)/100-t*F))*A
+		this.vy+=(5000-dist(x,y,this.x,this.y))/100*sin(tg(x,y,this.x,this.y))*(1+cos(dist(x,y,this.x,this.y)/100-t*F))*A
+	}
+	w(){
+		rainbow(dist(this.x+this.vx,this.y+this.vy,this.x,this.y)/10)
+		ellipse(this.x+this.vx,this.y+this.vy,10)
+		this.vx=0
+		this.vy=0
+		//line(this.x+this.vx,this.y+this.vy,this.x,this.y)
+	}
+}
+		
+function rainbow(x){
+	this.r=(cos(x)+1)*255/2
+	this.g=(cos(x+PI*2/3)+1)*255/2
+	this.b=(cos(x+PI*4/3)+1)*255/2
+	fill(this.r,this.g,this.b)
+}
+	
+function keyPressed(){
+  save('pix.jpg');
+}
+
+function tg(x1,y1,x2,y2){
+	this.s=asin((y2-y1)/dist(x1,y1,x2,y2))
+	this.c=acos((x2-x1)/dist(x1,y1,x2,y2))
+	if((sin(this.s)>=0)&&(cos(this.c)>=0)){return this.s}
+	if((sin(this.s)>=0)&&(cos(this.c))){return this.c}
+	if((sin(this.s)<0)&&(cos(this.c)>=0)){return this.s}
+	if((sin(this.s)<0)&&(cos(this.c)<0)){return -this.c}
+}
