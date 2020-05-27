@@ -1,0 +1,248 @@
+*{
+	font-family: 'Jost', sans-serif;
+}
+html, body {
+  margin: 0;
+  padding: 0;
+}
+canvas {
+  display:flex;
+  width: 100% !important;
+  position: static !important;
+}
+p{
+ margin: 20px;
+ padding: 0px;
+}
+input{
+margin: 20px;
+padding: 0px; 
+}
+body{
+    width: 100vw;
+    height: 100vh;
+    overflow:hidden;
+}
+label, p{
+    color:#fff;
+}
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+ <meta charset="utf-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <link href="https://fonts.googleapis.com/css2?family=Jost:wght@200&display=swap" rel="stylesheet">
+ <link rel="stylesheet" href="assets/css/estilos.css">
+ <title>p5.js example</title>
+ <style>
+   body {
+     padding: 0;
+     margin: 0;
+   }
+ </style>
+ <script src="../p5.js"></script>
+ <script src="../addons/p5.sound.min.js"></script>
+ <script src="../addons/p5.sound.js"></script>
+ <script src="assets/js/nuevoProyecto.js"></script>
+</head>
+
+<body>
+</body>
+
+</html>
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@200&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="estilos.css">
+  <title>p5.js example</title>
+  <style>
+    body {
+      padding: 0;
+      margin: 0;
+    }
+  </style>
+  <script src="../p5.js"></script>
+  <script src="../addons/p5.sound.min.js"></script>
+  <script src="../addons/p5.sound.js"></script>
+  <script src="Datos.js"></script>
+</head>
+
+<body>
+</body>
+
+</html>
+<!DOCTYPE HTML>
+<!--
+	Landed by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title> alimaña</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload landing">
+		<div id="page-wrapper">
+
+			<!-- Header -->
+				<header id="header">
+					<h1 id="logo"><a href="index.html">School Box</a></h1>
+					<nav id="nav">
+						<ul>
+							<li><a href="../index.html">Inicio</a></li>
+							<li>
+								<a href="#">Gráficas</a>
+								<ul>
+									<li><a href="pages/left-sidebar.html">Gráfica Fernando</a></li>
+									<li><a href="pages/right-sidebar.html">Gráfica Daniel</a></li>
+									<li><a href="pages/no-sidebar.html">Gráfica Hector</a></li>
+									<li><a href="pages/ultima.html">Gráfica Pablo</a></li>
+								</ul>
+							</li>
+							
+							
+						</ul>
+					</nav>
+				</header>
+
+			<!-- Banner -->
+				<section id="banner">
+					<div class="content">
+						<header>
+							<h2>School Box</h2>
+							<p>~Entre todos por los pequeños~<br />
+							
+
+Schoolbox es un proyecto creado por un grupo de 4 personas interesadas en la desinformación de los padres con respecto a la educación y los colegios en su ciudad, estos idearon un espacio donde reunieron a la mayor cantidad de padres posibles para que entre ellos mismos puedan compartir la información y se apoyen mutuamente.<br />
+
+
+<h2>¿Por qué es tan difícil encontrar un colegio ideal para mi hijo o infante conocido? </h2>
+<p>En la actualidad hay una gran variedad de instituciones que prestan diferentes servicios a la hora de brindar una educación al estudiante, es por ello que la escogencia de un colegio adecuado a las necesidades del niño es vital a la hora de definir su futuro y desarrollo.
+</p>
+<h2>¿Por qué se desarrolló el proyecto?</h2>
+<p>Este plan se desarrolló con el fin de encontrar gente que necesitara una mejor guía para seleccionar el colegio adecuado para sus hijos o infante conocido, donde por medio de charlas, opiniones y experiencias de otros usuarios se guiarán mejor a la hora de ver los puntos fuertes y débiles de las instituciones.</p>
+						</header>
+						<span class="image"><img src="images/pic01.jpeg" alt="" /></span>
+					</div>
+					<a href="#one" class="goto-next scrolly">Next</a>
+				</section>
+
+			<!-- One -->
+				<section id="one" class="spotlight style1 bottom">
+					<span class="image fit main"><img src="images/portada1.jpg" alt="" /></span>
+					<div class="content">
+						<div class="container">
+							<div class="row">
+								<div class="col-4 col-12-medium">
+									<header>
+								<h2> Un gran usuario " Jairo " </h2>
+										<p>¿ Quién es Jairo y Por qué es un usuario tan importante? </p>
+									</header>
+								</div>
+								<div class="col-4 col-12-medium">
+									<p> Jairo López es un padre que tiene la responsabilidad de criar a su hija. Quedando padre soltero él no tiene una gran capacidad económica para meter a su hija a el colegio que él quiere. No obstante encuentra las herramientas de SCHOOL BOX para seguir un paso a paso y  seleccionar el mejor colegio de acuerdo a su capacidad económica, principios familiares y habilidades de su hija.
+
+
+										Jairo se volvió importante para School Box ya que es un usuario que compartió su experiencia con nuestras herramientas y seguía consejos y experiencias de otros usuarios.
+
+
+										 </p>
+								</div>
+								
+								</div>
+							</div>
+						</div>
+					</div>
+					<a href="#two" class="goto-next scrolly">Next</a>
+				</section>
+
+			<!-- Two -->
+				<section id="two" class="spotlight style2 right">
+					<span class="image fit main"><img src="images/portada.png" alt="" /></span>
+					<div class="content">
+						<header>
+						<h2> ¿ Por qué Jairo utiliza la web y nuestras herramientas?</h2>
+							
+						</header>
+						<p> Jairo usa las herramientas para tener guías a la hora de seleccionar una institución adecuada a sus principios, economía y que sea agradable para su hija.
+						Además se apoya en la web para ver  de manera interactiva diferentes datos del icfes, como puntajes finales por instituciones, número de colegios por localidad y comparar  los costes por instituciones.</p>
+						<ul class="actions">
+							<li><a href="#" class="button">Subir</a></li>
+						</ul>
+					</div>
+					<a href="#three" class="goto-next scrolly">Next</a>
+				</section>
+
+			
+
+			
+
+		</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/jquery.dropotron.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+ <meta charset="utf-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <link href="https://fonts.googleapis.com/css2?family=Jost:wght@200&display=swap" rel="stylesheet">
+ <link rel="stylesheet" href="assets/css/estilos.css">
+ <title>p5.js example</title>
+ <style>
+   body {
+     padding: 0;
+     margin: 0;
+   }
+ </style>
+ <script src="../p5.js"></script>
+ <script src="../addons/p5.sound.min.js"></script>
+ <script src="../addons/p5.sound.js"></script>
+ <script src="assets/js/proyectoComp.js"></script>
+</head>
+
+<body>
+</body>
+
+</html>
+*{
+	font-family: 'Jost', sans-serif;
+}
+canvas{
+    width: 100% !important;
+    position: static !important;
+}
+button{
+    position: static !important;
+}
+div{
+    position: static !important;
+}
+body{
+    width: 100vw;
+    height: 100vh;
+    overflow:hidden;
+}
+label{
+    color:#fff;
+}
